@@ -3,68 +3,121 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    @apply text-surface-800 dark:text-surface-100;
-  }
   body {
-    @apply bg-surface-50 dark:bg-surface-900 min-h-screen font-sans;
+    @apply text-surface-800 dark:text-surface-100 bg-surface-50 dark:bg-surface-900;
   }
+  
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading font-semibold;
-  }
-  h1 {
-    @apply text-3xl md:text-4xl;
-  }
-  h2 {
-    @apply text-2xl md:text-3xl;
-  }
-  h3 {
-    @apply text-xl md:text-2xl;
+    @apply font-heading;
   }
 }
 
 @layer components {
   .btn {
-    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply px-4 py-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-surface-900 disabled:opacity-50 disabled:cursor-not-allowed;
   }
+  
   .btn-primary {
     @apply bg-primary text-white hover:bg-primary-dark focus:ring-primary;
   }
+  
   .btn-secondary {
     @apply bg-secondary text-white hover:bg-secondary-dark focus:ring-secondary;
   }
+  
   .btn-outline {
-    @apply border border-surface-300 hover:bg-surface-100 dark:border-surface-700 dark:hover:bg-surface-800 focus:ring-surface-300 dark:focus:ring-surface-700;
+    @apply border border-surface-300 dark:border-surface-600 bg-white dark:bg-surface-800 hover:bg-surface-100 dark:hover:bg-surface-700 focus:ring-surface-400;
   }
+  
   .card {
-    @apply bg-white dark:bg-surface-800 rounded-xl shadow-card p-6;
+    @apply rounded-xl shadow-card bg-white dark:bg-surface-800 overflow-hidden;
   }
-  .form-input {
-    @apply w-full px-4 py-2 bg-white dark:bg-surface-800 border border-surface-300 dark:border-surface-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-light;
-  }
+
   .task-item {
-    @apply bg-white dark:bg-surface-800 p-4 rounded-xl shadow-soft mb-3 border-l-4 transition-all duration-200;
+    @apply p-4 rounded-xl shadow-sm bg-white dark:bg-surface-800 border border-surface-200 dark:border-surface-700 hover:shadow-md transition-all;
   }
+  
   .task-item-low {
-    @apply border-l-green-500;
+    @apply border-l-4 border-l-blue-500;
   }
+  
   .task-item-medium {
-    @apply border-l-yellow-500;
+    @apply border-l-4 border-l-yellow-500;
   }
+  
   .task-item-high {
-    @apply border-l-red-500;
+    @apply border-l-4 border-l-red-500;
+  }
+  
+  .form-input {
+    @apply w-full px-3 py-2 bg-white dark:bg-surface-800 border border-surface-300 dark:border-surface-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
   }
 }
 
-@layer utilities {
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+/* Loading spinner */
+.loading-spinner {
+  @apply relative w-8 h-8;
+}
+
+.loading-spinner:after {
+  content: '';
+  @apply absolute left-0 top-0 w-full h-full rounded-full border-4 border-surface-200 dark:border-surface-700;
+  border-top-color: theme('colors.primary.DEFAULT');
+  animation: spinner 0.6s linear infinite;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
   }
 }
 
-/* Import react-toastify CSS */
-@import 'react-toastify/dist/ReactToastify.css';
+/* ApperUI styling overrides for better integration */
+#authentication {
+  --primary-color: theme('colors.primary.DEFAULT');
+  --primary-hover-color: theme('colors.primary.dark');
+  --text-color: theme('colors.surface.800');
+  --bg-color: theme('colors.white');
+  --border-color: theme('colors.surface.200');
+  --placeholder-color: theme('colors.surface.400');
+  --error-color: theme('colors.red.600');
+}
+
+.dark #authentication {
+  --text-color: theme('colors.surface.200');
+  --bg-color: theme('colors.surface.800');
+  --border-color: theme('colors.surface.700');
+  --placeholder-color: theme('colors.surface.600');
+  --error-color: theme('colors.red.400');
+}
+
+/* Custom scrollbar for light mode */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-surface-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-surface-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-surface-400;
+}
+
+/* Custom scrollbar for dark mode */
+.dark ::-webkit-scrollbar-track {
+  @apply bg-surface-800;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  @apply bg-surface-700;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  @apply bg-surface-600;
+}
