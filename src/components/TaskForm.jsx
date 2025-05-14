@@ -83,7 +83,9 @@ function TaskForm({ showAddForm, showEditForm, currentTask, setShowAddForm, setS
       newErrors.title = "Title must be less than 100 characters";
     }
     
-    if (task.description && task.description.length > 500) {
+    if (!task.description.trim()) {
+      newErrors.description = "Description is required";
+    } else if (task.description.length > 500) {
       newErrors.description = "Description must be less than 500 characters";
     }
     
@@ -214,7 +216,7 @@ function TaskForm({ showAddForm, showEditForm, currentTask, setShowAddForm, setS
                 
                 <div>
                   <label className="block text-sm font-medium mb-1" htmlFor="description">
-                    Description
+                    Description <span className="text-red-600">*</span>
                   </label>
                   <textarea
                     id="description"
@@ -392,7 +394,7 @@ function TaskForm({ showAddForm, showEditForm, currentTask, setShowAddForm, setS
                 
                 <div>
                   <label className="block text-sm font-medium mb-1" htmlFor="edit-description">
-                    Description
+                    Description <span className="text-red-600">*</span>
                   </label>
                   <textarea
                     id="edit-description"
